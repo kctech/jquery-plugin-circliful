@@ -14,7 +14,8 @@
 			backgroundBorderWidth: 15,
 			pointSize: 28.5,
 			fontColor: '#aaa',
-			percent: 75,
+			counterMax: 100,
+            counter: 88,
 			animation: 1,
 			animationStep: 5,
 			icon: 'none',
@@ -55,13 +56,15 @@
 
 			mergeDataAttributes(settings, circleContainer.data());
 
-			var percent = settings.percent;
+			var counter = settings.counter;
+            var counterMax = settings.counterMax;
 			var iconY = 83;
 			var iconX = 100;
 			var percentageY = settings.percentageY;
 			var percentageX = settings.percentageX;
 			var additionalCss;
 			var elements;
+            var textString;
 			var icon;
 			var backgroundBorderWidth = settings.backgroundBorderWidth;
 			var progressColor = settings.progressColor
@@ -122,23 +125,23 @@
 			if (settings.text != null) {
 				if (settings.halfCircle) {
 					if (settings.textBelow) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100') + '" y="' + (settings.textY != null ? settings.textY : '64%') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100') + '" y="' + (settings.textY != null ? settings.textY : '64%') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 					else if (settings.multiPercentage == 0) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '115') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '115') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 					else if (settings.multiPercentage == 1) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '228' ) + '" y="' + (settings.textY != null ? settings.textY : '65') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '228' ) + '" y="' + (settings.textY != null ? settings.textY : '65') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 				} else {
 					if (settings.textBelow) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '99%') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '99%') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 					else if (settings.multiPercentage == 0) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '115') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '100' ) + '" y="' + (settings.textY != null ? settings.textY : '115') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 					else if (settings.multiPercentage == 1) {
-						elements += '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '228' ) + '" y="' + (settings.textY != null ? settings.textY : '65') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
+						textString = '<text text-anchor="middle" x="' + (settings.textX != null ? settings.textX : '228' ) + '" y="' + (settings.textY != null ? settings.textY : '65') + '" style="' + settings.textStyle + '" fill="' + settings.textColor + '">' + settings.text + '</text>';
 					}
 				}
 			}
@@ -158,8 +161,9 @@
 							'<circle cx="100" cy="100" r="57" class="border" fill="' + settings.fillColor + '" stroke="' + settings.backgroundColor + '" stroke-width="' + backgroundBorderWidth + '" stroke-dasharray="360" clip-path="url(#cut-off-bottom)" transform="rotate(-90,100,100)" />' +
 							'<circle class="circle" cx="100" cy="100" r="57" class="border" fill="none" stroke="' + settings.foregroundColor + '" stroke-width="' + settings.foregroundBorderWidth + '" stroke-dasharray="0,20000" ' + rotate + ' />' +
 							'<circle cx="100" cy="100" r="' + settings.pointSize + '" fill="' + settings.pointColor + '" clip-path="url(#cut-off-bottom)" transform="rotate(-90,100,100)" />' +
-							icon +
-							'<text class="timer" text-anchor="middle" x="' + percentageX + '" y="' + percentageY + '" style="font-size: ' + settings.percentageTextSize + 'px; ' + additionalCss + ';' + settings.textAdditionalCss + '" fill="' + settings.fontColor + '"><tspan class="number">' + (settings.replacePercentageByText == null ? 0 : settings.replacePercentageByText) + '</tspan><tspan class="percent">' + (settings.noPercentageSign || settings.replacePercentageByText != null ? '' : '%') + '</tspan></text>')
+							icon + textString +
+							'<text class="timer" text-anchor="middle" x="' + percentageX + '" y="' + percentageY + '" style="font-size: ' +
+                            settings.percentageTextSize + 'px; ' + additionalCss + ';' + settings.textAdditionalCss + '" fill="' + settings.fontColor + '"><tspan class="number">' + (settings.replacePercentageByText == null ? 0 : settings.replacePercentageByText) + '</tspan><tspan class="percent">' + (settings.noPercentageSign || settings.replacePercentageByText != null ? '' : '%') + '</tspan></text>')
 					);
 			} else {
 				circleContainer
@@ -170,7 +174,7 @@
 							'<circle cx="100" cy="100" r="57" class="border" fill="' + settings.fillColor + '" stroke="' + settings.backgroundColor + '" stroke-width="' + backgroundBorderWidth + '" stroke-dasharray="360" transform="rotate(-90,100,100)" />' +
 							'<circle class="circle" cx="100" cy="100" r="57" class="border" fill="none" stroke="' + settings.foregroundColor + '" stroke-width="' + settings.foregroundBorderWidth + '" stroke-dasharray="0,20000" transform="rotate(-90,100,100)" />' +
 							'<circle cx="100" cy="100" r="' + settings.pointSize + '" fill="' + settings.pointColor + '" />' +
-							icon +
+							icon + textString +
 							'<text class="timer" text-anchor="middle" x="' + percentageX + '" y="' + percentageY + '" style="font-size: ' + settings.percentageTextSize + 'px; ' + additionalCss + ';' + settings.textAdditionalCss + '" fill="' + settings.fontColor + '"><tspan class="number">' + (settings.replacePercentageByText == null ? 0 : settings.replacePercentageByText) + '</tspan><tspan class="percent">' + (settings.noPercentageSign || settings.replacePercentageByText != null ? '' : '%') + '</tspan></text>')
 					);
 			}
@@ -179,15 +183,16 @@
 			var myTimer = circleContainer.find('.timer');
 			var interval = 30;
 			var angle = 0;
+            var angleOneStep = (360 / counterMax);
 			var angleIncrement = settings.animationStep;
 			var last = 0;
 			var summary = 0;
 			var oneStep = 0;
-			var text = percent;
-			var calculateFill = (360 / 100 * percent);
+			var text = counter;
+			var calculateFill = (360 / counterMax * counter);
 
 			if (settings.halfCircle) {
-				calculateFill = (360 / 100 * percent) / 2;
+				calculateFill = (360 / counterMax * counter) / 2;
 			}
 
 			if (settings.replacePercentageByText != null) {
@@ -195,8 +200,8 @@
 			}
 
 			if (settings.start > 0 && settings.target > 0) {
-				percent = settings.start / (settings.target / 100);
-				oneStep = settings.target / 100;
+				counter = settings.start / (settings.target / counterMax);
+				oneStep = settings.target / counterMax;
 			}
 
 			if (settings.animation == 1) {
@@ -238,12 +243,12 @@
 						summary += oneStep;
 					}
 					if (settings.halfCircle) {
-						if (angle *  2 / 3.6 >= percent && last == 1) {
-							angle = (3.6 * percent) / 2
+						if (angle *  2 / angleOneStep >= counter && last == 1) {
+							angle = (angleOneStep * counter) / 2
 						}
 					}	else {
-						if (angle / 3.6 >= percent && last == 1) {
-							angle = 3.6 * percent;
+						if (angle / angleOneStep >= counter && last == 1) {
+							angle = angleOneStep * counter;
 						}
 					}
 
@@ -253,12 +258,12 @@
 
 					if (settings.replacePercentageByText == null) {
 						if (settings.halfCircle) {
-							text = parseFloat((100 * angle / 360) * 2);
+							text = parseFloat((counterMax * angle / 360) * 2);
 						} else {
-							text = parseFloat((100 * angle / 360));
+							text = parseFloat((counterMax * angle / 360));
 						}
 						text = text.toFixed(settings.decimals);
-						if (!settings.alwaysDecimals && (percent == 0 || (percent > 1 && last != 1))) {
+						if (!settings.alwaysDecimals && (counter == 0 || (counter > 1 && last != 1))) {
 							text = parseInt(text);
 						}
 					}
@@ -284,7 +289,7 @@
 							if (settings.halfCircle) {
 								key /=  2
 							}
-							if ( angle >= key * 3.6) {
+							if ( angle >= key * angleOneStep) {
 								circle.css({
 									stroke: color,
 									transition: 'stroke 0.1s linear'
