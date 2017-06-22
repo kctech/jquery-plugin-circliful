@@ -61,7 +61,8 @@ Options
 | fontColor | color of the percentage | RGB | #aaa |
 | percentageY | vertical position of the percentage text | integer | 100 |
 | percentageX | horizontal position of the percentage text | integer | 100 |
-| percent     | can be 1 to 100 | integer | 75 |
+| counter     | counter itself (was percentage) | int-decimal | 75 |
+| counterMax     | max value to count to | integer | 100 |
 | animation     | if the circle should be animated initially | int | 1 |
 | animationStep     | can be 1 to 100, how fast or slow the animation should be | int | 5 |
 | progressColor    | change color of foreground circle as percents changed（{ 50: '#FF6C00', 60: '#FF6C00'}） | {integer:RGB} | null |
